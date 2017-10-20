@@ -107,10 +107,8 @@ public class ForwardTask extends Task{
 			System.out.println(ip +":客户端发来的请求是："+message);
 			requestType = message.getInt(Config.REQUEST_TYPE);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -149,7 +147,7 @@ public class ForwardTask extends Task{
 		case Config.REQUEST_GET_ALL_RECORDS: //处理“查询所有心率记录”请求
 			handGetAllHeartraterecord();
 			break;
-		case Config.REQUEST_GET_ALL_MOUYILIE_RECORDS: //处理“查询所有心率记录”请求
+		case Config.REQUEST_GET_ALL_MOUYILIE_RECORDS: //处理“查询所有心率记录中的某几列”请求
 			handGetAllMOUYITIAOHeartraterecord();
 			break;
 		case Config.REQUEST_ADD_FRIEND: //处理“增加好友”请求
@@ -277,7 +275,6 @@ public class ForwardTask extends Task{
 			System.out.println(sendObject.toString()+"这是pk结果json");
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -298,7 +295,6 @@ public class ForwardTask extends Task{
 			outSend.println(sendObject.toString());
 			System.out.println(sendObject.toString()+"这是挑战时的添加积分的json");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -402,7 +398,6 @@ public class ForwardTask extends Task{
 			System.out.println();
 			
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 	}
@@ -425,7 +420,6 @@ public class ForwardTask extends Task{
 			System.out.println();
 			
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 	}
@@ -447,7 +441,6 @@ public class ForwardTask extends Task{
 			System.out.println();
 			
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 	}
@@ -476,7 +469,6 @@ public class ForwardTask extends Task{
 			System.out.println("**************************返回结果*************************************");
 			System.out.println();
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 	}
@@ -504,7 +496,6 @@ public class ForwardTask extends Task{
 			System.out.println("**************************返回结果*************************************");
 			System.out.println();
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 	}
@@ -665,7 +656,6 @@ public class ForwardTask extends Task{
 			outSend.println(sendObject.toString());
 			System.out.println(sendObject.toString()+"这是邀战时的json");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 	}
@@ -685,7 +675,6 @@ public class ForwardTask extends Task{
 			outSend.println(sendObject.toString());
 			System.out.println(sendObject.toString()+"邀战的结果哦！！");
 		}catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 	}
@@ -705,7 +694,6 @@ public class ForwardTask extends Task{
 			outSend.println(sendObject.toString());
 			System.out.println("退出游戏界面"+sendSocket.toString());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -732,7 +720,6 @@ public class ForwardTask extends Task{
 
 	@Override
 	protected boolean needExecuteImmediate() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	
@@ -762,7 +749,6 @@ public class ForwardTask extends Task{
 			System.out.println("发送给接收端："+sendObject.toString());
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
