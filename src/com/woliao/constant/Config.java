@@ -28,6 +28,8 @@ public interface Config {
 	public static final int REQUEST_DELETE_FRIEND = 1100; //	删除好友请求
 	public static final int LLK_SEND_WEI_XIN = 1101; //	删除好友请求
 	public static final int LLK_GET_WEI_XIN = 1102; //	删除好友请求
+    public static final int REQUEST_FRIEND_INFO = 2007; //	查看朋友地址请求
+
 	
 	public static final int SUCCESS = 2000;  //成功结果
 	public static final int FAIl = 2001;     //失败结果

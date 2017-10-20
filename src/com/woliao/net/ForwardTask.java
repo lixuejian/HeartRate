@@ -159,6 +159,9 @@ public class ForwardTask extends Task{
 		case Config.REQUEST_GET_FRIEND: //处理“获取好友”请求
 			handGetFriends();
 			break;
+		case Config.REQUEST_FRIEND_INFO: //处理“获取好友位置心率”请求
+			handgetFriendInfo();
+			break;
 		case Config.REQUEST_GET_USERS_ONLINE: //处理“获取在线用户”请求
 			handGetOnlineUsers();
 			break;
@@ -363,6 +366,40 @@ public class ForwardTask extends Task{
 			}
 		}
 		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+		
+		
+		
+		//查看好友地址心率信息
+		private void handgetFriendInfo() {
+			try {
+				String selfName = message.getString("username");
+				String friendName = message.getString("friendname");
+				
+				System.out.println(ip+":"+selfName + "发出了查看好友地址心率信息请求");
+				JSONObject obj = new JSONObject();
+				obj.put(Config.REQUEST_TYPE, Config.REQUEST_FRIEND_INFO);
+				Prop prop=new PropService().getProp(friendName);
+				
+				obj.put("friendname", friendName);
+				obj.put("sex", prop.getSex());
+				obj.put("age", prop.getAge());
+				obj.put("sportlevel", prop.getSportlevel());
+				obj.put("bloodperssure", prop.getBloodpressure());
+				obj.put("bloodsugar", prop.getBloodsugar());
+				obj.put("drinkwater", prop.getDrinkwater());
+				obj.put("longitude", prop.getLongitude());
+				obj.put("latitude", prop.getLatitude());
+				obj.put("uploadtime", prop.getUploadtime());
+				obj.put("bpuploadtime", prop.getBpuploadtime());
+				obj.put("bsuploadtime", prop.getBsuploadtime());
+				
+				out.println(obj.toString());
+				
+				System.out.println(ip + ":" + selfName + "查看朋友信息成功，结果为："+obj.toString());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	
 	//修改道具
 	private void handModifyProp() {
@@ -605,39 +642,6 @@ public class ForwardTask extends Task{
 			}
 		}
 		
-
-//	//快速登录
-//	private void handQuickLogin(){
-//		try {
-//			System.out.println(ip+":客户端发出了快速登录请求");
-//			JSONObject obj = null;
-//			boolean flag = true;
-//			while(flag){
-//				String username = RandomUtil.getRandomUsername();
-//				String password = RandomUtil.getRandomPassword();
-//				name = username;
-//				obj = new JSONObject();
-//				obj.put(Config.REQUEST_TYPE, Config.REQUEST_QUICK_LOGIN);
-//				User user = new User();
-//				user.setUsername(username);
-//				user.setPassword(password);
-//				if(new UserService().register(user)){
-////					obj.put(Config.RESULT, Config.SUCCESS);
-//					obj.put("username", username);
-//					obj.put("password", password);
-//					new UserService().setStateToOnline(username);
-//					System.out.println(ip+":快速登录成功,服务器为你分配的用户名：" + username + ",密码：" + password);
-//					map.put(username, socket);
-//					flag = false;
-//				}
-//				
-//			}
-//			out.println(obj.toString());
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-	
 	//处理“邀战”请求
 	private void handInvite(){
 		try {

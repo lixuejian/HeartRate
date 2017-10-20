@@ -78,11 +78,18 @@ public class Client {
 //			jObject.put("heartraterecord", "bbbbbbbbbbbbbbbbbbbbbbbbbb");
 			
 			
+//			/**
+//			 * 查询所有心率记录
+//			 */
+//			jObject.put("requestType", Config.REQUEST_GET_ALL_RECORDS);
+//			jObject.put("username", "aaa");
+			
 			/**
-			 * 查询所有心率记录
+			 * 查询好友心率地址信息
 			 */
-			jObject.put("requestType", Config.REQUEST_GET_ALL_RECORDS);
-			jObject.put("username", "aaa");
+			jObject.put("requestType", Config.REQUEST_FRIEND_INFO);
+			jObject.put("username", "bbb");
+			jObject.put("friendname", "aaa");
 			
 			
 //			/**
