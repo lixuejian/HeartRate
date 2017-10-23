@@ -98,11 +98,31 @@ public class Client {
 //			jObject.put("username", "aaa");
 //			jObject.put("playername", "ddd");
 			
-			/**
-			 * 查询好友心率地址信息
-			 */
-			jObject.put("requestType", Config.REQUEST_GET_FRIEND);
-			jObject.put("username", "aaa");
+//			/**
+//			 * 查询好友心率地址信息
+//			 */
+//			jObject.put("requestType", Config.REQUEST_GET_FRIEND);
+//			jObject.put("username", "aaa");
+			
+//			/**
+//			 * 查询好在线好友
+//			 */
+//			jObject.put("requestType", Config.REQUEST_GET_USERS_ONLINE);
+			
+			
+//			/**
+//			 * 查询我的好友
+//			 */
+//			jObject.put("requestType", Config.REQUEST_GET_FRIEND);
+//			jObject.put("username", "aaa");
+			
+			
+//			/**
+//			 * 删除好友
+//			 */
+//			jObject.put("requestType", Config.REQUEST_DELETE_FRIEND);
+//			jObject.put("username", "aaa");
+//			jObject.put("friendname", "hhh");
 			
 			
 //			/**
@@ -120,11 +140,11 @@ public class Client {
 //			jObject.put("username", "bbb");
 //			jObject.put("datenum", 32);
 			
-//			/**
-//			 * 查询心率一条记录
-//			 */
-//			jObject.put("requestType", Config.REQUEST_GET_ONE_RECORDS);
-//			jObject.put("username", "aaa");
+			/**
+			 * 查询心率一条记录
+			 */
+			jObject.put("requestType", Config.REQUEST_GET_ONE_RECORDS);
+			jObject.put("username", "aaa");
 			
 //			Date a=new Date();
 //			long b=a.getTime();
