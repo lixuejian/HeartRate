@@ -84,12 +84,25 @@ public class Client {
 //			jObject.put("requestType", Config.REQUEST_GET_ALL_RECORDS);
 //			jObject.put("username", "aaa");
 			
+//			/**
+//			 * 查询好友心率地址信息
+//			 */
+//			jObject.put("requestType", Config.REQUEST_FRIEND_INFO);
+//			jObject.put("username", "bbb");
+//			jObject.put("friendname", "aaa");
+			
+//			/**
+//			 * 查询好友心率地址信息
+//			 */
+//			jObject.put("requestType", Config.REQUEST_ADD_FRIEND);
+//			jObject.put("username", "aaa");
+//			jObject.put("playername", "ddd");
+			
 			/**
 			 * 查询好友心率地址信息
 			 */
-			jObject.put("requestType", Config.REQUEST_FRIEND_INFO);
-			jObject.put("username", "bbb");
-			jObject.put("friendname", "aaa");
+			jObject.put("requestType", Config.REQUEST_GET_FRIEND);
+			jObject.put("username", "aaa");
 			
 			
 //			/**

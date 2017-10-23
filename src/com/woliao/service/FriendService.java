@@ -18,14 +18,14 @@ public class FriendService {
 	}
 	public JSONArray getFriends(String username) throws JSONException{
 		List<String> friendNames =  new FriendDAO().getFriends(username);
-		PropDAO propDAO = new PropDAO();
+		//PropDAO propDAO = new PropDAO();
 		JSONArray arr = new JSONArray();
 		for(int i = 0; i < friendNames.size(); i++){
 			JSONObject obj = new JSONObject();
 			String friendName = friendNames.get(i);
-			int bloodpressure = propDAO.getAllProp(friendName).getBloodpressure();
+			//int bloodpressure = propDAO.getAllProp(friendName).getBloodpressure();
 			obj.put("friendName", friendName);
-			obj.put("bloodpressure", bloodpressure);
+			//obj.put("bloodpressure", bloodpressure);
 			arr.put(obj);
 		}
 		return arr;
