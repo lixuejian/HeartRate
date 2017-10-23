@@ -197,6 +197,9 @@ public class ForwardTask extends Task{
 		}
 	}
 	
+	
+	private void zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz() {}
+	
 	//处理“登录”请求
 	private void handLogin()
 	{
@@ -259,148 +262,54 @@ public class ForwardTask extends Task{
 			e.printStackTrace();
 		}
 	}
-
-	//pk结果的发送请求
-	private void handPKRestult(){
-		System.out.println("客户发送了pk结果的请求！");
-		try {
-//			String username = message.getString("username");//发送者
-			String playername = message.getString("playername");//接受者
-			Socket sendSocket = map.get(playername);
-			PrintWriter outSend = new PrintWriter(new BufferedWriter(
-					new OutputStreamWriter(sendSocket.getOutputStream(),
-							"UTF-8")), true);
-			JSONObject sendObject = new JSONObject();
-			sendObject.put("requestType", Config.REQUEST_PK_RESULT);
-//			sendObject.put("result",Config.FAIl);
-			outSend.println(sendObject.toString());
-			outSend.flush();
-			System.out.println(sendObject.toString()+"这是pk结果json");
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
-	//挑战是“添加积分”请求
-	private void handAddPlayerScore(){
-		try {
-			System.out.println("客户发出了挑战时添加积分告诉对方的请求！");
-			int num = message.getInt("num");
-			String playername = message.getString("playername");
-			Socket sendSocket = map.get(playername);
-			PrintWriter outSend = new PrintWriter(new BufferedWriter(
-					new OutputStreamWriter(sendSocket.getOutputStream(),
-							"UTF-8")), true);
-			JSONObject sendObject = new JSONObject();
-			sendObject.put("requestType", Config.REQUEST_ADD_PLAYERSCORE);
-			sendObject.put("num", num);
-			outSend.println(sendObject.toString());
-			System.out.println(sendObject.toString()+"这是挑战时的添加积分的json");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
-
-	//处理获取在线用户请求
-	private void handGetOnlineUsers() {
-		try {
-			System.out.println(ip+":发出了获取在线用户请求");
-			JSONObject obj= new UserService().findOnlineUsers();
-			String data = obj.toString();
-			System.out.println(ip+":获取在线用户成功~~~"+data);
-			out.println(data);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
-	}
-
-	//添加好友
-	private void handAddFriend() {
-		try {
-			String selfName = message.getString("username");
-			String friendName = message.getString("playername");
-			
-			System.out.println(ip+":"+selfName + "发出了添加好友请求");
-			JSONObject obj = new JSONObject();
-			obj.put(Config.REQUEST_TYPE, Config.REQUEST_ADD_FRIEND);
-			if(new FriendService().addFriend(selfName, friendName)){
-				obj.put(Config.RESULT, Config.SUCCESS);
-				System.out.println(ip+":"+selfName + "添加好友成功");
-			}else{
-				obj.put(Config.RESULT, Config.FAIl);
-				System.out.println(ip+":"+selfName + "添加好友失败");
-			}
-			out.println(obj.toString());
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
+	private void zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz() {}
 
-	//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-		//删除好友
-		private void handDeleteFriend_ForwardTask() {
-			try {
-				String selfName = message.getString("username");
-				String friendName = message.getString("friendname");
-				//String friendName = "xff";
-				
-				System.out.println(ip+":"+selfName + "发出了删除好友请求");
-				JSONObject obj = new JSONObject();
-				obj.put(Config.REQUEST_TYPE, Config.REQUEST_DELETE_FRIEND);
-				if(new FriendService().deleteFriend_Service(selfName, friendName)){
-					obj.put(Config.RESULT, Config.SUCCESS);
-					System.out.println(ip+":"+selfName + "添加删除成功");
-				}else{
-					obj.put(Config.RESULT, Config.FAIl);
-					System.out.println(ip+":"+selfName + "添加删除失败");
-				}
-				out.println(obj.toString());
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+	//处理获取道具
+	private void handGetProp() {
+		try {
+			System.out.println(ip+":发出了获取属性请求");
+			String username = message.getString("username");
+			Prop prop = new PropService().getProp(username);
+			JSONObject obj = new JSONObject();
+			obj.put(Config.REQUEST_TYPE, Config.REQUEST_GET_PROP);
+			obj.put("sex", prop.getSex());
+			obj.put("age", prop.getAge());
+			obj.put("sportlevel", prop.getSportlevel());
+			obj.put("bloodperssure", prop.getBloodpressure());
+			obj.put("bloodsugar", prop.getBloodsugar());
+			obj.put("drinkwater", prop.getDrinkwater());
+			String data = obj.toString();
+			System.out.println(ip + ":" + username + "成功获取属性~~~"+data);
+			out.println(data);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-		
-		
-		
-		//查看好友地址心率信息
-		private void handgetFriendInfo() {
+	}
+
+	//处理获取地址
+		private void handGetAddress() {
 			try {
-				String selfName = message.getString("username");
-				String friendName = message.getString("friendname");
+				System.out.println(ip+":发出了获取地址请求");
+				String username = message.getString("username");
 				
-				System.out.println(ip+":"+selfName + "发出了查看好友地址心率信息请求");
+				String friendname = message.getString("friendname");//被查看地址的人
+				
+				Prop prop = new PropService().getProp(friendname);
 				JSONObject obj = new JSONObject();
-				obj.put(Config.REQUEST_TYPE, Config.REQUEST_FRIEND_INFO);
-				Prop prop=new PropService().getProp(friendName);
-				
-				obj.put("friendname", friendName);
-				obj.put("sex", prop.getSex());
-				obj.put("age", prop.getAge());
-				obj.put("sportlevel", prop.getSportlevel());
-				obj.put("bloodperssure", prop.getBloodpressure());
-				obj.put("bloodsugar", prop.getBloodsugar());
-				obj.put("drinkwater", prop.getDrinkwater());
+				obj.put(Config.REQUEST_TYPE, Config.REQUEST_ADDRESS);
 				obj.put("longitude", prop.getLongitude());
 				obj.put("latitude", prop.getLatitude());
 				obj.put("uploadtime", prop.getUploadtime());
-				obj.put("bpuploadtime", prop.getBpuploadtime());
-				obj.put("bsuploadtime", prop.getBsuploadtime());
-				
-				out.println(obj.toString());
-				
-				System.out.println(ip + ":" + selfName + "查看朋友信息成功，结果为："+obj.toString());
+	//			obj.put("score", prop.getScore());
+				String data = obj.toString();
+				System.out.println(ip + ":" + username + "成功获取地址~~~"+data);
+				out.println(data);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-	
+
 	//修改道具
 	private void handModifyProp() {
 		try {
@@ -418,71 +327,29 @@ public class ForwardTask extends Task{
 			e.printStackTrace();
 		}
 	}
-	
-	private void handGetAllHeartraterecord() {
-		System.out.println("******************************请求处理***********************************");
-		System.out.println("客户端发送了查看心率记录的请求！");
+
+	//修改地址
+	private void handModifyPropAddress() {
 		try {
-			String username=message.getString("username");
+			System.out.println(ip + ":发出了修改经纬度请求");
+			String username = message.getString("username");
+			//String longitude = message.getString("longitude");
+			double longitudenum = message.getDouble("longitudenum");
+			//String latitude = message.getString("latitude");
+			double latitudenum = message.getDouble("latitudenum");
+			new PropService().modifyPropAddress(username, longitudenum,latitudenum);
 			JSONObject obj = new JSONObject();
-			JSONArray arr = new RecordheartrateService().getAllRecord(username);
-			obj.put(Config.REQUEST_TYPE, Config.REQUEST_GET_ALL_RECORDS);
-			obj.put("list", arr);
-			String str=obj.toString();
-			out.println(str);
-			System.out.println(ip + ":" + username + "查看记录成功"+str);
-			System.out.println("******************************返回结果*************************************");
-			System.out.println();
-			
+			obj.put(Config.REQUEST_TYPE, Config.REQUEST_MODIFY_PROP);
+			obj.put(Config.RESULT, Config.SUCCESS);
+			out.println(obj.toString());
+			System.out.println(ip + ":" + username + "修改经纬度成功");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	
-	private void handGetAllMOUYITIAOHeartraterecord() {
-		System.out.println("******************************请求处理***********************************");
-		System.out.println("客户端发送了查看心率记录的请求！");
-		try {
-			String username=message.getString("username");
-			String lieming=message.getString("lieming");
-			JSONObject obj = new JSONObject();
-			JSONArray arr = new RecordheartrateService().getAllRecordAboutHeartrate(username,lieming);
-			obj.put(Config.REQUEST_TYPE, Config.REQUEST_GET_ALL_MOUYILIE_RECORDS);
-			obj.put("list", arr);
-			String str=obj.toString();
-			out.println(str);
-			System.out.println(ip + ":" + username + "查看记录成功"+str);
-			System.out.println("******************************返回结果*************************************");
-			System.out.println();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void handGetPeriodHeartraterecords() {
-		System.out.println("******************************请求处理***********************************");
-		System.out.println("客户端发送了查看某时间段的心率记录的请求！");
-		try {
-			String username=message.getString("username");
-			int dateNum=message.getInt("datenum");
-			JSONObject obj = new JSONObject();
-			JSONArray arr = new RecordheartrateService().getPeriodRecords(username, dateNum);
-			obj.put(Config.REQUEST_TYPE, Config.REQUEST_GET_PERIOD_RECORDS);
-			obj.put("list", arr);
-			String str=obj.toString();
-			out.println(str);
-			System.out.println(ip + ":" + username + "查看记录成功"+str);
-			System.out.println("******************************返回结果*************************************");
-			System.out.println();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
+	private void zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz() {}
+
 	private void handUploadheartraterecord() {
 		System.out.println("******************************请求处理***********************************");
 		System.out.println("客户端发送了上传心率记录的请求！");
@@ -536,8 +403,96 @@ public class ForwardTask extends Task{
 			e.printStackTrace();
 		}
 	}
+
+	private void handGetPeriodHeartraterecords() {
+		System.out.println("******************************请求处理***********************************");
+		System.out.println("客户端发送了查看某时间段的心率记录的请求！");
+		try {
+			String username=message.getString("username");
+			int dateNum=message.getInt("datenum");
+			JSONObject obj = new JSONObject();
+			JSONArray arr = new RecordheartrateService().getPeriodRecords(username, dateNum);
+			obj.put(Config.REQUEST_TYPE, Config.REQUEST_GET_PERIOD_RECORDS);
+			obj.put("list", arr);
+			String str=obj.toString();
+			out.println(str);
+			System.out.println(ip + ":" + username + "查看记录成功"+str);
+			System.out.println("******************************返回结果*************************************");
+			System.out.println();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
+	private void handGetAllHeartraterecord() {
+		System.out.println("******************************请求处理***********************************");
+		System.out.println("客户端发送了查看心率记录的请求！");
+		try {
+			String username=message.getString("username");
+			JSONObject obj = new JSONObject();
+			JSONArray arr = new RecordheartrateService().getAllRecord(username);
+			obj.put(Config.REQUEST_TYPE, Config.REQUEST_GET_ALL_RECORDS);
+			obj.put("list", arr);
+			String str=obj.toString();
+			out.println(str);
+			System.out.println(ip + ":" + username + "查看记录成功"+str);
+			System.out.println("******************************返回结果*************************************");
+			System.out.println();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void handGetAllMOUYITIAOHeartraterecord() {
+		System.out.println("******************************请求处理***********************************");
+		System.out.println("客户端发送了查看心率记录的请求！");
+		try {
+			String username=message.getString("username");
+			String lieming=message.getString("lieming");
+			JSONObject obj = new JSONObject();
+			JSONArray arr = new RecordheartrateService().getAllRecordAboutHeartrate(username,lieming);
+			obj.put(Config.REQUEST_TYPE, Config.REQUEST_GET_ALL_MOUYILIE_RECORDS);
+			obj.put("list", arr);
+			String str=obj.toString();
+			out.println(str);
+			System.out.println(ip + ":" + username + "查看记录成功"+str);
+			System.out.println("******************************返回结果*************************************");
+			System.out.println();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	
+	private void zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz() {}
+	
+	//添加好友
+	private void handAddFriend() {
+		try {
+			String selfName = message.getString("username");
+			String friendName = message.getString("playername");
+			
+			System.out.println(ip+":"+selfName + "发出了添加好友请求");
+			JSONObject obj = new JSONObject();
+			obj.put(Config.REQUEST_TYPE, Config.REQUEST_ADD_FRIEND);
+			if(new FriendService().addFriend(selfName, friendName)){
+				obj.put(Config.RESULT, Config.SUCCESS);
+				System.out.println(ip+":"+selfName + "添加好友成功");
+			}else{
+				obj.put(Config.RESULT, Config.FAIl);
+				System.out.println(ip+":"+selfName + "添加好友失败");
+			}
+			out.println(obj.toString());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	//获取好友列表
 	private void handGetFriends() {
 		System.out.println(ip + "发出了获取好友列表请求");
@@ -555,71 +510,78 @@ public class ForwardTask extends Task{
 		}
 	}
 
-	//处理获取道具
-	private void handGetProp() {
+	//查看好友地址心率信息
+	private void handgetFriendInfo() {
 		try {
-			System.out.println(ip+":发出了获取属性请求");
-			String username = message.getString("username");
-			Prop prop = new PropService().getProp(username);
+			String selfName = message.getString("username");
+			String friendName = message.getString("friendname");
+			
+			System.out.println(ip+":"+selfName + "发出了查看好友地址心率信息请求");
 			JSONObject obj = new JSONObject();
-			obj.put(Config.REQUEST_TYPE, Config.REQUEST_GET_PROP);
+			obj.put(Config.REQUEST_TYPE, Config.REQUEST_FRIEND_INFO);
+			Prop prop=new PropService().getProp(friendName);
+			
+			obj.put("friendname", friendName);
 			obj.put("sex", prop.getSex());
 			obj.put("age", prop.getAge());
 			obj.put("sportlevel", prop.getSportlevel());
 			obj.put("bloodperssure", prop.getBloodpressure());
 			obj.put("bloodsugar", prop.getBloodsugar());
 			obj.put("drinkwater", prop.getDrinkwater());
-			String data = obj.toString();
-			System.out.println(ip + ":" + username + "成功获取属性~~~"+data);
-			out.println(data);
+			obj.put("longitude", prop.getLongitude());
+			obj.put("latitude", prop.getLatitude());
+			obj.put("uploadtime", prop.getUploadtime());
+			obj.put("bpuploadtime", prop.getBpuploadtime());
+			obj.put("bsuploadtime", prop.getBsuploadtime());
+			
+			out.println(obj.toString());
+			
+			System.out.println(ip + ":" + selfName + "查看朋友信息成功，结果为："+obj.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	//修改地址
-	private void handModifyPropAddress() {
+	//处理获取在线用户请求
+	private void handGetOnlineUsers() {
 		try {
-			System.out.println(ip + ":发出了修改经纬度请求");
-			String username = message.getString("username");
-			//String longitude = message.getString("longitude");
-			double longitudenum = message.getDouble("longitudenum");
-			//String latitude = message.getString("latitude");
-			double latitudenum = message.getDouble("latitudenum");
-			new PropService().modifyPropAddress(username, longitudenum,latitudenum);
-			JSONObject obj = new JSONObject();
-			obj.put(Config.REQUEST_TYPE, Config.REQUEST_MODIFY_PROP);
-			obj.put(Config.RESULT, Config.SUCCESS);
-			out.println(obj.toString());
-			System.out.println(ip + ":" + username + "修改经纬度成功");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	//处理获取地址
-	private void handGetAddress() {
-		try {
-			System.out.println(ip+":发出了获取地址请求");
-			String username = message.getString("username");
-			
-			String friendname = message.getString("friendname");//被查看地址的人
-			
-			Prop prop = new PropService().getProp(friendname);
-			JSONObject obj = new JSONObject();
-			obj.put(Config.REQUEST_TYPE, Config.REQUEST_ADDRESS);
-			obj.put("longitude", prop.getLongitude());
-			obj.put("latitude", prop.getLatitude());
-			obj.put("uploadtime", prop.getUploadtime());
-//			obj.put("score", prop.getScore());
+			System.out.println(ip+":发出了获取在线用户请求");
+			JSONObject obj= new UserService().findOnlineUsers();
 			String data = obj.toString();
-			System.out.println(ip + ":" + username + "成功获取地址~~~"+data);
+			System.out.println(ip+":获取在线用户成功~~~"+data);
 			out.println(data);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+
+	//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+	//删除好友
+	private void handDeleteFriend_ForwardTask() {
+		try {
+			String selfName = message.getString("username");
+			String friendName = message.getString("friendname");
+			
+			System.out.println(ip+":"+selfName + "发出了删除好友请求");
+			JSONObject obj = new JSONObject();
+			obj.put(Config.REQUEST_TYPE, Config.REQUEST_DELETE_FRIEND);
+			if(new FriendService().deleteFriend_Service(selfName, friendName)){
+				obj.put(Config.RESULT, Config.SUCCESS);
+				System.out.println(ip+":"+selfName + "添加删除成功");
+			}else{
+				obj.put(Config.RESULT, Config.FAIl);
+				System.out.println(ip+":"+selfName + "添加删除失败");
+			}
+			out.println(obj.toString());
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	
+	private void zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz() {}
 	
 	//处理获取积分
 		private void handGetBloodsugar() {
@@ -642,6 +604,27 @@ public class ForwardTask extends Task{
 			}
 		}
 		
+	//挑战是“添加积分”请求
+		private void handAddPlayerScore(){
+			try {
+				System.out.println("客户发出了挑战时添加积分告诉对方的请求！");
+				int num = message.getInt("num");
+				String playername = message.getString("playername");
+				Socket sendSocket = map.get(playername);
+				PrintWriter outSend = new PrintWriter(new BufferedWriter(
+						new OutputStreamWriter(sendSocket.getOutputStream(),
+								"UTF-8")), true);
+				JSONObject sendObject = new JSONObject();
+				sendObject.put("requestType", Config.REQUEST_ADD_PLAYERSCORE);
+				sendObject.put("num", num);
+				outSend.println(sendObject.toString());
+				System.out.println(sendObject.toString()+"这是挑战时的添加积分的json");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+
 	//处理“邀战”请求
 	private void handInvite(){
 		try {
@@ -682,6 +665,29 @@ public class ForwardTask extends Task{
 			e.printStackTrace();
 		}
 	}
+	//pk结果的发送请求
+		private void handPKRestult(){
+			System.out.println("客户发送了pk结果的请求！");
+			try {
+	//			String username = message.getString("username");//发送者
+				String playername = message.getString("playername");//接受者
+				Socket sendSocket = map.get(playername);
+				PrintWriter outSend = new PrintWriter(new BufferedWriter(
+						new OutputStreamWriter(sendSocket.getOutputStream(),
+								"UTF-8")), true);
+				JSONObject sendObject = new JSONObject();
+				sendObject.put("requestType", Config.REQUEST_PK_RESULT);
+	//			sendObject.put("result",Config.FAIl);
+				outSend.println(sendObject.toString());
+				outSend.flush();
+				System.out.println(sendObject.toString()+"这是pk结果json");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+
 	//处理“退出游戏界面”请求！
 	private void handExitGame(){
 		System.out.println("客户发送了退出游戏界面的请求！");
